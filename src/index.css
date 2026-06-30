@@ -1,0 +1,840 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@utility glass {
+  @apply bg-white/90 backdrop-blur-xl border border-white/60 shadow-lg;
+}
+@utility glass-dark {
+  @apply bg-slate-900/20 backdrop-blur-xl border border-white/10 shadow-lg;
+}
+@utility school-gradient {
+  background: linear-gradient(135deg, #f0f4ff 0%, #fafbff 50%, #f0f7ff 100%);
+}
+@utility card-hover {
+  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  @apply text-slate-800;
+  background: linear-gradient(135deg, #f0f4ff 0%, #fafbff 50%, #f0f7ff 100%);
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* scrollbars */
+* { scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+*::-webkit-scrollbar { width: 4px; height: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 99px; }
+
+/* ═══════════════════════════════════════════════════
+   GLOBAL DARK MODE
+   ═══════════════════════════════════════════════════ */
+html.dark-mode { color-scheme: dark; }
+
+html.dark-mode body,
+html.dark-mode .school-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark-mode .bg-white         { background-color: #1e293b !important; }
+html.dark-mode .bg-white\/70     { background-color: rgba(15,23,42,0.95) !important; }
+html.dark-mode .bg-white\/80     { background-color: rgba(15,23,42,0.95) !important; }
+html.dark-mode .bg-white\/90     { background-color: rgba(30,41,59,0.95) !important; }
+html.dark-mode .bg-slate-50      { background-color: #1e293b !important; }
+html.dark-mode .bg-slate-100     { background-color: #1e293b !important; }
+html.dark-mode .bg-slate-50\/30  { background-color: rgba(15,23,42,0.3) !important; }
+
+html.dark-mode .text-slate-900   { color: #f8fafc !important; }
+html.dark-mode .text-slate-800   { color: #f1f5f9 !important; }
+html.dark-mode .text-slate-700   { color: #e2e8f0 !important; }
+html.dark-mode .text-slate-600   { color: #cbd5e1 !important; }
+html.dark-mode .text-slate-500   { color: #94a3b8 !important; }
+html.dark-mode .text-slate-400   { color: #64748b !important; }
+
+html.dark-mode .border-slate-100 { border-color: #334155 !important; }
+html.dark-mode .border-slate-200 { border-color: #334155 !important; }
+html.dark-mode .border-white     { border-color: #334155 !important; }
+
+html.dark-mode input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
+html.dark-mode select,
+html.dark-mode textarea {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f1f5f9 !important;
+}
+html.dark-mode input::placeholder,
+html.dark-mode textarea::placeholder { color: #475569 !important; }
+html.dark-mode select option { background-color: #1e293b; color: #f1f5f9; }
+html.dark-mode input:focus, html.dark-mode select:focus, html.dark-mode textarea:focus {
+  background-color: #1e293b !important;
+  border-color: #3b82f6 !important;
+}
+
+html.dark-mode table           { color: #f1f5f9 !important; }
+html.dark-mode thead tr        { background-color: #1e293b !important; }
+html.dark-mode tbody tr        { border-color: #334155 !important; }
+html.dark-mode tbody tr:hover  { background-color: #1e293b !important; }
+html.dark-mode td, html.dark-mode th { color: #f1f5f9 !important; border-color: #334155 !important; }
+html.dark-mode .divide-y > * + * { border-color: #334155 !important; }
+html.dark-mode .hover\:bg-slate-50:hover  { background-color: #334155 !important; }
+html.dark-mode .hover\:bg-slate-100:hover { background-color: #334155 !important; }
+html.dark-mode .bg-emerald-50 { background-color: rgba(16,185,129,0.12) !important; }
+html.dark-mode .bg-rose-50    { background-color: rgba(244,63,94,0.12)   !important; }
+html.dark-mode .bg-amber-50   { background-color: rgba(245,158,11,0.12)  !important; }
+html.dark-mode .bg-blue-50    { background-color: rgba(59,130,246,0.12)  !important; }
+html.dark-mode .glass {
+  background-color: rgba(30,41,59,0.95) !important;
+  border-color: #334155 !important;
+}
+html.dark-mode *::-webkit-scrollbar-thumb { background: #334155; }
+
+/* ═══════════════════════════════════════════════════
+   MOBILE-FIRST RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════════════ */
+
+/* ── Phone: < 640px ─────────────────────────────── */
+@media (max-width: 639px) {
+  /* Prevent iOS input zoom */
+  input, select, textarea { font-size: 16px !important; }
+
+  /* ── BASE READABILITY ──
+     Bump tiny font sizes to readable values.
+     The codebase uses text-[9px]…text-[11px] heavily for labels —
+     those become unreadable on phones, so we floor them at 11–13px. */
+  body { font-size: 15px; line-height: 1.5; }
+
+  /* Floor utility font-sizes from Tailwind arbitrary values */
+  .text-\[8px\]  { font-size: 11px !important; }
+  .text-\[9px\]  { font-size: 11px !important; }
+  .text-\[10px\] { font-size: 12px !important; }
+  .text-\[11px\] { font-size: 13px !important; }
+  .text-xs       { font-size: 13px !important; line-height: 1.45 !important; }
+
+  /* Headers slightly larger and more legible */
+  h1 { font-size: 1.1rem !important; }
+  h2 { font-size: 1rem !important; }
+  h3 { font-size: 0.95rem !important; }
+
+  /* ── TAP TARGETS ──
+     Make all buttons / inputs / links at least 40px tall for thumbs */
+  button, [role="button"], a, label.cursor-pointer {
+    min-height: 40px;
+  }
+  /* Tiny icon-only buttons (sidebar X, close icons) keep their size */
+  button.w-8.h-8, button.w-9.h-9, button.w-10.h-10,
+  .w-8.h-8, .w-9.h-9, .w-10.h-10 { min-height: unset; }
+
+  /* ── HEADERS ──
+     The modern page headers use py-4 which is fine,
+     but the modern icon (w-10 h-10) is a bit small on phones */
+  header .w-10.h-10 { width: 2.75rem !important; height: 2.75rem !important; }
+
+  /* Dashboard header: single row, icon only for some items */
+  header.app-header {
+    padding: 0 0.75rem !important;
+    height: 3.5rem !important;
+    min-height: 3.5rem !important;
+  }
+
+  /* Main content: minimal padding */
+  main { padding: 0.75rem !important; }
+
+  /* Cards: remove excessive radius */
+  [class*="rounded-\[3rem\]"], [class*="rounded-\[2.5rem\]"], [class*="rounded-\[2rem\]"] {
+    border-radius: 1rem !important;
+  }
+
+  /* ── STAT CARDS ──
+     Make value font larger so glanceable */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Tiles grid: 3 per row on phone */
+  .tiles-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Tables: make scrollable horizontally */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Tables: bump cell padding and font for legibility */
+  table th, table td {
+    padding: 0.6rem 0.5rem !important;
+    font-size: 12.5px !important;
+  }
+
+  /* Modals: full screen on mobile */
+  .modal-card {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-height: 100dvh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Hide secondary info on small screens */
+  .hide-mobile { display: none !important; }
+
+  /* Notifications dropdown: full width */
+  .w-80 { width: calc(100vw - 1rem) !important; max-width: 24rem; }
+
+  /* Print overlay: don't resize on mobile */
+  .print-document { zoom: 0.45; transform-origin: top center; }
+
+  /* ── PADDING TIGHTENING ──
+     Pages use p-3 sm:p-5 md:p-6 - p-3 (12px) is too tight on phones.
+     Bump baseline page padding to 16px for better breathing room. */
+  .p-3 { padding: 1rem !important; }
+  .p-4 { padding: 1rem !important; }
+  .px-3 { padding-left: 0.9rem !important; padding-right: 0.9rem !important; }
+  .py-3 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+
+  /* But keep paddings on small chip/button elements (.px-2, .py-1.5 etc) */
+  .px-2 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+  .py-1\.5 { padding-top: 0.375rem !important; padding-bottom: 0.375rem !important; }
+}
+
+/* ── Tablet: 640–1023px ─────────────────────────── */
+@media (min-width: 640px) and (max-width: 1023px) {
+  main { padding: 1.25rem !important; }
+  .tiles-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .print-document { zoom: 0.65; transform-origin: top center; }
+}
+
+/* ── Print ──────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+  body { overflow: visible !important; background: white !important; zoom: 1 !important; }
+  .print-document { zoom: 1 !important; padding: 0 !important; gap: 0 !important; display: block !important; }
+  .a4-page { box-shadow: none !important; border: none !important; margin: 0 !important; min-height: auto !important; }
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ═══════════════════════════════════════════════════════
+   GLOBAL MOBILE RESPONSIVE FIXES
+   Applies to ALL forms, modals, and layouts site-wide
+   ═══════════════════════════════════════════════════════ */
+
+/* Fix modals on small screens */
+@media (max-width: 640px) {
+  /* All fixed modals - ensure padding and no overflow */
+  .fixed.inset-0 > div,
+  .fixed.inset-0 > [class*="motion"] {
+    max-height: 95vh !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+
+  /* Modal content areas - better padding */
+  .fixed.inset-0 .p-6 { padding: 1rem !important; }
+  .fixed.inset-0 .p-8 { padding: 1.25rem !important; }
+  .fixed.inset-0 .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+  /* Rounded corners smaller on mobile */
+  .rounded-\[3rem\] { border-radius: 1.25rem !important; }
+  .rounded-\[2rem\] { border-radius: 1rem !important; }
+
+  /* Text sizing minimums for readability */
+  .text-\[9px\] { font-size: 10px !important; }
+
+  /* Table cells - reduce padding on mobile */
+  table td, table th {
+    padding: 4px 6px !important;
+    font-size: 11px !important;
+  }
+  table th {
+    font-size: 10px !important;
+  }
+
+  /* Prevent horizontal scroll on tables */
+  .overflow-x-auto table {
+    min-width: unset !important;
+  }
+
+  /* Fix stat cards grid - 2 cols on very small screens */
+  .grid-cols-2.sm\:grid-cols-3.lg\:grid-cols-6 {
+    gap: 8px !important;
+  }
+
+  /* Fix button groups that overflow */
+  .flex.gap-2 > button,
+  .flex.gap-3 > button {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  /* Sidebar fixes */
+  .w-64 { width: 260px !important; }
+
+  /* Receipt viewing modal - smaller on mobile */
+  .max-w-4xl { max-width: calc(100vw - 24px) !important; }
+  .max-w-5xl { max-width: calc(100vw - 24px) !important; }
+  .max-w-xl { max-width: calc(100vw - 24px) !important; }
+  .max-w-md { max-width: calc(100vw - 24px) !important; }
+  .max-w-lg { max-width: calc(100vw - 24px) !important; }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  /* Fix grid layouts that assume desktop */
+  .grid.grid-cols-3:not(.sm\:grid-cols-3) {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Headers - compact on tablet */
+  header .text-lg { font-size: 1rem !important; }
+  header .text-2xl { font-size: 1.25rem !important; }
+}
+
+/* Safe area padding for notched phones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  footer, .shrink-0.z-20 {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Touch-friendly minimum sizes */
+@media (hover: none) and (pointer: coarse) {
+  button, [role="button"], select {
+    min-height: 40px;
+  }
+  input, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
+  }
+}
+
+/* Fix col-span-2 in single-column grids */
+@media (max-width: 768px) {
+  .grid-cols-1 > .col-span-2 {
+    grid-column: span 1 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE INPUT SIZE NORMALIZATION
+   Fixes all hardcoded large padding on inputs/selects
+   across components that don't use shared UI components
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Normalize all form inputs on mobile */
+  input.py-4, textarea.py-4, select.py-4,
+  input[class*="py-4"], textarea[class*="py-4"], select[class*="py-4"] {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  input.px-6, textarea.px-6, select.px-6,
+  input[class*="px-6"], textarea[class*="px-6"], select[class*="px-6"] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  input.px-8, textarea.px-8, select.px-8,
+  input[class*="px-8"], textarea[class*="px-8"], select[class*="px-8"] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  /* Normalize large text inputs */
+  input.text-2xl, input[class*="text-2xl"] {
+    font-size: 1.25rem !important;
+  }
+  /* Modal large rounded corners */
+  .rounded-3xl { border-radius: 1.25rem !important; }
+
+  /* Fix employee management modals */
+  .max-w-xl .p-8, .max-w-md .p-8 { padding: 1.25rem !important; }
+  .max-w-4xl .p-8, .max-w-5xl .p-8 { padding: 1rem !important; }
+
+  /* Fix grid cols in modals */
+  .grid.grid-cols-2:not(.sm\:grid-cols-2):not([class*="gap-3"]) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Ensure consistent input height across the site */
+input, select, textarea {
+  box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE TABLE → CARD CONVERSION
+   Transforms all data tables into readable card layouts
+   on mobile screens (< 640px)
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Convert ALL data tables to block layout */
+  .overflow-x-auto table,
+  .flex-1 table,
+  .overflow-y-auto table {
+    display: block !important;
+    width: 100% !important;
+  }
+  .overflow-x-auto thead,
+  .flex-1 thead,
+  .overflow-y-auto thead {
+    display: none !important;
+  }
+  .overflow-x-auto tbody,
+  .flex-1 tbody,
+  .overflow-y-auto tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .overflow-x-auto tbody tr,
+  .flex-1 tbody tr,
+  .overflow-y-auto tbody tr {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px 8px !important;
+    padding: 10px 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    align-items: center !important;
+    position: relative !important;
+  }
+  .overflow-x-auto tbody td,
+  .flex-1 tbody td,
+  .overflow-y-auto tbody td {
+    display: inline-flex !important;
+    padding: 2px 4px !important;
+    font-size: 12px !important;
+    border: none !important;
+    text-align: right !important;
+    align-items: center !important;
+  }
+  /* Make name cells prominent */
+  .overflow-x-auto tbody td:nth-child(2),
+  .flex-1 tbody td:nth-child(2),
+  .overflow-y-auto tbody td:nth-child(2) {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    width: 100% !important;
+    display: flex !important;
+  }
+  /* Hide # column on mobile */
+  .overflow-x-auto tbody td:first-child,
+  .flex-1 tbody td:first-child,
+  .overflow-y-auto tbody td:first-child {
+    display: none !important;
+  }
+  /* Make action buttons wrap properly */
+  .overflow-x-auto tbody td:last-child,
+  .flex-1 tbody td:last-child,
+  .overflow-y-auto tbody td:last-child {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    padding-top: 6px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    margin-top: 4px !important;
+    justify-content: flex-start !important;
+  }
+  /* Fix action button sizes on mobile */
+  .overflow-x-auto tbody td button,
+  .flex-1 tbody td button,
+  .overflow-y-auto tbody td button {
+    min-height: 36px !important;
+    font-size: 11px !important;
+  }
+
+  /* ── Dashboard fixes ──────────────────── */
+  /* Stat cards - 2 cols, tighter */
+  .grid.grid-cols-2.sm\:grid-cols-3.lg\:grid-cols-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+  .grid.grid-cols-2.sm\:grid-cols-3.lg\:grid-cols-6 > div {
+    padding: 10px !important;
+  }
+  /* Dashboard tile grid */
+  .grid.grid-cols-3.md\:grid-cols-4.lg\:grid-cols-6 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .grid.grid-cols-3.md\:grid-cols-4.lg\:grid-cols-6 > div > div {
+    min-height: 90px !important;
+    padding: 10px !important;
+  }
+  .grid.grid-cols-3.md\:grid-cols-4.lg\:grid-cols-6 .text-xs {
+    font-size: 10px !important;
+  }
+
+  /* ── Shortcuts bar ──────────────────── */
+  .flex.gap-2.overflow-x-auto {
+    gap: 6px !important;
+  }
+  .flex.gap-2.overflow-x-auto > button {
+    padding: 8px 10px !important;
+    font-size: 10px !important;
+    gap: 4px !important;
+  }
+
+  /* ── Quick access sidebar cards ──────── */
+  .grid.grid-cols-2.gap-2\.5 {
+    gap: 6px !important;
+  }
+  .grid.grid-cols-2.gap-2\.5 > button {
+    padding: 8px !important;
+    font-size: 10px !important;
+    gap: 6px !important;
+  }
+
+  /* ── Charts area ──────────────────── */
+  .grid.grid-cols-1.lg\:grid-cols-3 {
+    gap: 12px !important;
+  }
+  .recharts-wrapper {
+    font-size: 10px !important;
+  }
+
+  /* ── Modal receipts list - card layout ── */
+  .space-y-3 > div.flex.items-center.justify-between {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .space-y-3 > div.flex.items-center.justify-between > .flex.items-center.gap-4 {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .space-y-3 > div.flex.items-center.justify-between > .flex.items-center.gap-2 {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  /* ── Header compact ──────────────────── */
+  header h1, header .text-lg, header .text-xl {
+    font-size: 0.875rem !important;
+  }
+  header .text-\[10px\], header .text-\[11px\] {
+    display: none !important;
+  }
+}
+
+/* Tablets - 641px to 768px */
+@media (min-width: 641px) and (max-width: 768px) {
+  /* Keep tables but reduce padding */
+  table td, table th {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+  }
+  /* Hide less important columns */
+  table th:nth-child(n+6),
+  table td:nth-child(n+6) {
+    font-size: 11px !important;
+  }
+}
+
+/* Dark mode table cards */
+@media (max-width: 640px) {
+  .dark .overflow-x-auto tbody tr,
+  .dark .flex-1 tbody tr,
+  .dark .overflow-y-auto tbody tr {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE FIXES: Academic Year Selector + Notifications
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Academic Year Selector dropdown - ensure visible */
+  [class*="AcademicYear"] > div,
+  .absolute.top-full.right-0[class*="rounded"] {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-height: 70vh !important;
+    border-radius: 1.5rem 1.5rem 0 0 !important;
+    z-index: 100 !important;
+  }
+
+  /* Notifications dropdown - make it full-width bottom sheet */
+  .absolute.top-full.left-0[class*="rounded"],
+  .absolute.top-full.right-0[class*="w-80"],
+  .absolute.top-full.right-0[class*="w-96"] {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 70vh !important;
+    border-radius: 1.5rem 1.5rem 0 0 !important;
+    z-index: 100 !important;
+  }
+
+  /* Previous Debts page fixes */
+  .overflow-y-auto { 
+    -webkit-overflow-scrolling: touch !important; 
+    overflow-y: auto !important;
+  }
+
+  /* Fix any absolute dropdowns that go off-screen */
+  .absolute[class*="top-full"] {
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* Ensure all scrollable containers work on mobile */
+  .flex-1.overflow-y-auto,
+  .flex-1.overflow-auto {
+    min-height: 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Fix header actions - compact on mobile */
+  header .flex.items-center.gap-2 > button,
+  header .flex.items-center.gap-3 > button {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+  }
+
+  /* Academic year badge - smaller */
+  header [class*="bg-blue-50"][class*="rounded-xl"],
+  header [class*="bg-emerald-50"][class*="rounded-xl"] {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   FINAL MOBILE POLISH — Remaining edge cases
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Password prompt modal - ensure always centered */
+  .fixed.inset-0[class*="z-[999]"] > div {
+    max-width: 320px !important;
+    margin: auto !important;
+  }
+  
+  /* Fix employee management modals */
+  .space-y-6 > .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Compact toast notifications */
+  .fixed.bottom-4 { bottom: 8px !important; }
+  .fixed.bottom-4 > div { max-width: calc(100vw - 24px) !important; }
+  
+  /* Sidebar overlay - ensure full coverage */
+  aside.fixed { z-index: 50 !important; }
+  
+  /* Print hide on mobile */
+  @media print {
+    .no-print, header, footer, aside, nav { display: none !important; }
+  }
+  
+  /* Academic year selector - prevent cutoff */
+  [class*="AcademicYear"] {
+    position: relative !important;
+    z-index: 60 !important;
+  }
+}
+
+/* Performance: GPU-accelerate animated elements */
+.animate-pulse, [class*="animate-"] {
+  will-change: opacity;
+}
+[class*="whileHover"], [class*="motion"] {
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════════
+   COMPREHENSIVE DARK MODE — CSS-based, covers ALL components
+   Triggered by .dark-mode class on <html>
+   ═══════════════════════════════════════════════════════ */
+
+/* Base backgrounds */
+.dark-mode body,
+.dark-mode .min-h-screen { background-color: #0f172a !important; color: #e2e8f0 !important; }
+
+/* All white cards/containers → dark slate */
+.dark-mode .bg-white { background-color: #1e293b !important; color: #e2e8f0 !important; }
+.dark-mode .bg-white\/80 { background-color: rgba(30,41,59,0.9) !important; }
+.dark-mode .bg-slate-50,
+.dark-mode .bg-slate-100,
+.dark-mode .bg-gray-50 { background-color: #1e293b !important; }
+.dark-mode .bg-slate-50\/50 { background-color: rgba(30,41,59,0.5) !important; }
+
+/* Borders */
+.dark-mode .border-slate-100,
+.dark-mode .border-slate-200,
+.dark-mode .border-slate-50 { border-color: #334155 !important; }
+.dark-mode .border-blue-50\/50 { border-color: rgba(51,65,85,0.5) !important; }
+
+/* Text colors */
+.dark-mode .text-slate-800,
+.dark-mode .text-slate-900,
+.dark-mode .text-slate-700 { color: #e2e8f0 !important; }
+.dark-mode .text-slate-600 { color: #cbd5e1 !important; }
+.dark-mode .text-slate-500 { color: #94a3b8 !important; }
+.dark-mode .text-slate-400 { color: #94a3b8 !important; }
+
+/* Inputs */
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder { color: #475569 !important; }
+.dark-mode input:focus,
+.dark-mode select:focus,
+.dark-mode textarea:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+}
+.dark-mode option { background-color: #1e293b !important; color: #e2e8f0 !important; }
+
+/* Tables */
+.dark-mode table { border-color: #334155 !important; }
+.dark-mode thead { background: #1e293b !important; }
+.dark-mode thead th { color: #94a3b8 !important; border-color: #334155 !important; }
+.dark-mode tbody tr { border-color: #1e293b !important; }
+.dark-mode tbody tr:hover { background-color: rgba(51,65,85,0.3) !important; }
+.dark-mode tbody td { border-color: #1e293b !important; color: #cbd5e1 !important; }
+
+/* Modals */
+.dark-mode .fixed .bg-white {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* Badges/pills - keep their colors but darken backgrounds */
+.dark-mode .bg-emerald-100 { background-color: rgba(16,185,129,0.15) !important; }
+.dark-mode .bg-rose-100,
+.dark-mode .bg-red-100 { background-color: rgba(244,63,94,0.15) !important; }
+.dark-mode .bg-amber-100,
+.dark-mode .bg-orange-100 { background-color: rgba(245,158,11,0.15) !important; }
+.dark-mode .bg-blue-100 { background-color: rgba(59,130,246,0.15) !important; }
+.dark-mode .bg-indigo-100 { background-color: rgba(99,102,241,0.15) !important; }
+.dark-mode .bg-violet-100 { background-color: rgba(139,92,246,0.15) !important; }
+.dark-mode .bg-cyan-100 { background-color: rgba(6,182,212,0.15) !important; }
+.dark-mode .bg-teal-100 { background-color: rgba(20,184,166,0.15) !important; }
+
+/* Light-colored containers */
+.dark-mode .bg-blue-50,
+.dark-mode .bg-indigo-50,
+.dark-mode .bg-emerald-50,
+.dark-mode .bg-rose-50,
+.dark-mode .bg-amber-50,
+.dark-mode .bg-orange-50,
+.dark-mode .bg-cyan-50,
+.dark-mode .bg-teal-50,
+.dark-mode .bg-violet-50 {
+  background-color: rgba(30,41,59,0.5) !important;
+}
+
+/* Shadows - suppress in dark mode */
+.dark-mode .shadow-sm,
+.dark-mode .shadow-md,
+.dark-mode .shadow-lg,
+.dark-mode .shadow-xl,
+.dark-mode .shadow-2xl {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+}
+
+/* Gradients for headers/banners - keep but darken */
+.dark-mode [style*="radial-gradient"] {
+  background: #0f172a !important;
+}
+
+/* Form specific */
+.dark-mode .bg-slate-50\/50 { background-color: rgba(15,23,42,0.5) !important; }
+.dark-mode .focus\:bg-white:focus { background-color: #1e293b !important; }
+
+/* Scrollbar */
+.dark-mode * { scrollbar-color: #475569 transparent; }
+.dark-mode *::-webkit-scrollbar-thumb { background: #475569; }
+
+/* Print - always light */
+@media print {
+  .dark-mode body,
+  .dark-mode .bg-white,
+  .dark-mode input,
+  .dark-mode select,
+  .dark-mode textarea,
+  .dark-mode table,
+  .dark-mode thead,
+  .dark-mode tbody td { 
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #000 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE FIX 3: Prevent overlap + compact layout
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Shortcuts bar: wrap instead of scroll */
+  .flex.gap-2.overflow-x-auto,
+  .flex.gap-6.overflow-x-auto {
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+    gap: 4px !important;
+    justify-content: center !important;
+  }
+  /* Shortcut buttons: fixed size for grid-like layout */
+  .flex.gap-2.overflow-x-auto > button,
+  .flex.gap-6.overflow-x-auto > button {
+    flex: 0 0 auto !important;
+    min-width: 40px !important;
+    justify-content: center !important;
+  }
+
+  /* Quick access grid: 5 cols of icon-only buttons */
+  .grid.grid-cols-2.gap-2\.5 {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 4px !important;
+  }
+  .grid.grid-cols-2.gap-2\.5 > button {
+    padding: 10px !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    font-size: 8px !important;
+  }
+  .grid.grid-cols-2.gap-2\.5 > button > span {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Header: prevent button overflow */
+  header .flex.items-center.gap-2,
+  header .flex.items-center.gap-3 {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+
+  /* Shortcuts section: compact padding */
+  [class*="border-b"][class*="py-4"] {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
